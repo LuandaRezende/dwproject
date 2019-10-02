@@ -1,0 +1,94 @@
+{% extends 'admin/app_index.html' %}
+{% block content %}
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+        google.charts.load('current');  
+        google.charts.setOnLoadCallback(drawVisualization);
+
+        function drawVisualization() {
+            var wrapper = new google.visualization.ChartWrapper({
+            chartType: 'ColumnChart',
+            dataTable: [['', 'Feminino', 'Masculino', 'Não definido'],
+                        ['', 9115, 7254, 1]],
+            options: {'title': 'Quantidade de alunos'},
+            containerId: 'vis_div'
+            });
+            wrapper.draw();
+        }
+    </script>
+
+    <style>
+
+    .dashboard #content {
+    width: 100%;
+    }
+
+    </style>
+  </head>
+  <body>
+        <center><h4>Relatório</h4></center>
+
+        <div class="container">
+           
+        <div class="container-fluid">
+            <div style="margin-left:-200px; margin-right: 200px">
+               <img src="data:image/png;base64,{{ grafico_sexo|safe }}">
+               <div style="margin-top:-400px;margin-left:700px;width: 500px; height: 400px;" id="vis_div">         
+                </div>
+                
+            </div>
+            <center><table border="2">
+                    <tr>
+                            <td>Sexo</td>
+                            <td>Qtd. Alunos</td>
+                        </tr>	
+                        {% for aluno_sexo in alunos_sexo %}
+                            <tr>
+                                {% if aluno_sexo.sexo__descricao == 'F' %}
+                                  <td>Feminino</td>
+                                {% elif aluno_sexo.sexo__descricao == 'M' %}  
+                                    <td>Masculino</td>
+                                {% else %}
+                                    <td>ND</td>
+                                {% endif %}
+                                <td>{{ aluno_sexo.total }}</td>     
+                                
+                            </tr>
+                        {% endfor %}             
+              </tr>
+            </table>
+            </center>
+
+         
+                
+        </div>
+        <hr style="color: black">
+
+        <center><img src="data:image/png;base64,{{grafico_etnia|safe }}"></center>
+        <hr>
+        <center><img src="data:image/png;base64,{{grafico_origemEscolar|safe }}"></center>
+        <hr>
+        
+
+        </div>
+              
+              
+
+
+        {% endblock %}
+        
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
